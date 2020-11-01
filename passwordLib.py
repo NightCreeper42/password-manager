@@ -79,8 +79,10 @@ class newPass:
             
             if breakMain == True:
                 break
+    
+    def btecEncrypt(seld,password):
+        replaceAlpha = ()
+        replaceSpecial = ()
 
-class btecEncryption:
-    def __init__(self,password):
-        replacement = ('"','v','')
+    #TODO add replacement tuples and convert the string using them
 

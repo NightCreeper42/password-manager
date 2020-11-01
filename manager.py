@@ -20,3 +20,5 @@ while True:
                     keep = input()
                     if keep == "k":
                         print("dummy")
+
+#TODO add the btec encryption and implement it
