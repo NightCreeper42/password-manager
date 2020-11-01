@@ -1,0 +1,5 @@
+passLenMin:10
+passLenMax:15
+charChangeChance:13
+specialMax:2
+numMax:7
