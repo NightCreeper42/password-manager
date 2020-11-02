@@ -1,4 +1,4 @@
-import random
+import random,btecKey
 class newPass:
     def __init__(self):
         self.SETTINGS = {}
@@ -17,9 +17,6 @@ class newPass:
         self.alphabet = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
         self.password = ''
         settingsFile.close()
-
-        """remove a character from the special characters list"""
-        del self.specials[self.specials.index(char)]
     
     def generate(self):
         """generate your new fancy password"""
@@ -42,6 +39,7 @@ class newPass:
         return password
     
     def settingsChange(self):
+        """change how the password is generated"""
         while True:
             print()
             print("1) Change the minimum length")
@@ -79,10 +77,25 @@ class newPass:
             
             if breakMain == True:
                 break
-    
-    def btecEncrypt(seld,password):
-        replaceAlpha = ()
-        replaceSpecial = ()
+        
+    def btecEncrypt(self,password):
+        myKey = btecKey.newKey()
+        key = myKey.generate()
+        replaceAlpha = []
+        replaceSpecial = []
+        temp = key
+        key = []
+        for x in temp:
+            key.append(x)
+
+        for x in range(len(self.alphabet)):
+            replaceAlpha.append(key[x-1])
+        for x in range(len(self.specials)):
+            replaceSpecial.append(key[x-1])
+            
+test = newPass()
+password = test.generate()
+test.btecEncrypt(password)
 
     #TODO add replacement tuples and convert the string using them
 
