@@ -79,23 +79,40 @@ class newPass:
                 break
         
     def btecEncrypt(self,password):
+        global myKey
         myKey = btecKey.newKey()
-        key = myKey.generate()
-        replaceAlpha = []
-        replaceSpecial = []
-        temp = key
-        key = []
-        for x in temp:
-            key.append(x)
+        self.key = myKey.generate()
+        print("Your password's key:\n",self.key+"\nKeep it safe!")
 
-        for x in range(len(self.alphabet)):
-            replaceAlpha.append(key[x-1])
-        for x in range(len(self.specials)):
-            replaceSpecial.append(key[x-1])
-            
+        self.encrypted = ""
+        print(password)
+        for char in password:
+            self.encrypted = self.encrypted + list(self.key)[myKey.merge.index(char)]
+            print(char,"->",list(self.key)[list(password).index(char)])
+
+        return self.encrypted
+
+    def btecDecrypt(self,password,key):
+        alphaSpec = []
+        for char in self.alphabet:
+            alphaSpec.append(char)
+        for char in self.specials:
+            alphaSpec.append(char)
+        
+        self.decrypted = ""
+        for char in password:
+            self.decrypted = self.decrypted + alphaSpec[list(self.key).index(char)]
+        return self.decrypted
+        
+        
+        
 test = newPass()
 password = test.generate()
-test.btecEncrypt(password)
+encrypted = test.btecEncrypt(password)
+decrypted = test.btecDecrypt(encrypted,test.key)
+print("password",password)
+print("encrypted",encrypted)
+print("decrypted",decrypted)
 
-    #TODO add replacement tuples and convert the string using them
+    #TODO figure out what the hell is going on with btecDecrypt, something to do with numbers
 
