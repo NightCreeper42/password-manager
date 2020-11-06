@@ -14,9 +14,22 @@ class newPass:
             index += 1
 
         self.specials = ['!','"','£','$','€','%','^','&','*','(',')','[',']','@']
-        self.alphabet = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
+        self.alphabet = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
         self.password = ''
         settingsFile.close()
+
+        global myKey
+        myKey = btecKey.newKey()
+
+        global alphaSpec
+        alphaSpec = []
+        for char in self.alphabet:
+            alphaSpec.append(char)
+        for char in self.specials:
+            alphaSpec.append(char)
+        for char in range(10):
+            alphaSpec.append(str(char))
+        
     
     def generate(self):
         """generate your new fancy password"""
@@ -29,10 +42,7 @@ class newPass:
             if charChange >= self.SETTINGS["specialMax"]+1 and charChange <= self.SETTINGS["numMax"]:
                 char = str(random.randint(0,9))
             if charChange >= self.SETTINGS["numMax"]+1 and charChange <= self.SETTINGS["charChangeChance"]:
-                upChance = random.randint(0,1)
                 char = random.choice(self.alphabet)
-                if upChance == 1:
-                    char = char.upper()
                 
             password = password + char
         
@@ -79,40 +89,31 @@ class newPass:
                 break
         
     def btecEncrypt(self,password):
-        global myKey
-        myKey = btecKey.newKey()
         self.key = myKey.generate()
         print("Your password's key:\n",self.key+"\nKeep it safe!")
 
         self.encrypted = ""
-        print(password)
         for char in password:
-            self.encrypted = self.encrypted + list(self.key)[myKey.merge.index(char)]
-            print(char,"->",list(self.key)[list(password).index(char)])
-
+            self.encrypted = self.encrypted + alphaSpec[list(self.key).index(char)]
         return self.encrypted
 
     def btecDecrypt(self,password,key):
-        alphaSpec = []
-        for char in self.alphabet:
-            alphaSpec.append(char)
-        for char in self.specials:
-            alphaSpec.append(char)
-        
         self.decrypted = ""
         for char in password:
-            self.decrypted = self.decrypted + alphaSpec[list(self.key).index(char)]
+            self.decrypted = self.decrypted + list(key)[alphaSpec.index(char)]
         return self.decrypted
-        
-        
-        
-test = newPass()
-password = test.generate()
-encrypted = test.btecEncrypt(password)
-decrypted = test.btecDecrypt(encrypted,test.key)
-print("password",password)
-print("encrypted",encrypted)
-print("decrypted",decrypted)
 
-    #TODO figure out what the hell is going on with btecDecrypt, something to do with numbers
+    def addToFile(self,filename,password):
+        file = open(filename,"a")
+        file.write(password+'\n')
+        file.close()
 
+    def getFromFile(self,filename,passname):
+        file = open(filename,"r")
+        fileRows = []
+        for row in file.read():
+            row = row.split(',')
+            if row[0] == passname:
+                break
+        return row[1]
+        

@@ -4,21 +4,37 @@ print("2) Edit generation settings")
 print("3) Remove a password")
 inp = int(input())
 passw = newPass()
+breakMain = False
+letsQuit = False
 while True:
     if inp == 1:
-        password = passw.generate()
-        print("New password:", password)
-        print("a for another or c to continue")
         while True:
-            another = input()
-            if another == "a":
-                breakMain = False
-                break
-            if another == "c":
-                print("k to keep the password or q to quit")
-                while True:
-                    keep = input()
-                    if keep == "k":
-                        print("dummy")
+            password = passw.generate()
+            print(password)
+            print("k to keep, a for another or q to quit")
+            while True:
+                inp = input()
+                if inp == 'k':
+                    breakMain = True
+                    break
+                if inp == 'a':
+                    break
+                if inp == 'q':
+                    letsQuit = True
+                    breakMain = True
+                    break
 
-#TODO add the btec encryption and implement it
+            if breakMain == True:
+                break
+
+        if letsQuit == True:
+            break
+
+        passw = passw.btecEncrypt(password)
+        passname = input("Password label: ")
+        passw.addToFile("passwords.csv",passw)
+        passw.addToFile("keys.csv",passw.key)
+        passw.addToFile("passnames.csv",passname)
+        print("Your password has been added to the file.")
+
+#TODO check to see if adding the to file works then make the retrieve a password bit
