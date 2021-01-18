@@ -30,7 +30,6 @@ class newPass:
         for char in range(10):
             alphaSpec.append(str(char))
         
-    
     def generate(self):
         """generate your new fancy password"""
         password = ""
@@ -110,10 +109,15 @@ class newPass:
 
     def getFromFile(self,filename,passname):
         file = open(filename,"r")
-        fileRows = []
+        #fileRows = []
         for row in file.read():
             row = row.split(',')
             if row[0] == passname:
                 break
         return row[1]
+
+    def removeFromFile(self,filename,passname):
+        file = open(filename,"r+")
+        fileRows = []
+        print(fileRows)
         

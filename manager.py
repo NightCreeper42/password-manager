@@ -2,6 +2,7 @@ from passwordLib import *
 print("1) Generate a password")
 print("2) Edit generation settings")
 print("3) Remove a password")
+print("4) Retrieve a password")
 inp = int(input())
 passw = newPass()
 breakMain = False
@@ -30,11 +31,26 @@ while True:
         if letsQuit == True:
             break
 
-        passw = passw.btecEncrypt(password)
+        passwEnc = passw.btecEncrypt(password)
         passname = input("Password label: ")
-        passw.addToFile("passwords.csv",passw)
+        passw.addToFile("passwords.csv",passwEnc)
         passw.addToFile("keys.csv",passw.key)
         passw.addToFile("passnames.csv",passname)
         print("Your password has been added to the file.")
+    
+    elif inp == 2:
+        passw.settingsChange()
+    
+    elif inp == 3:
+        names = open("passnames.csv","r")
+        namesList = names.read()
+        namesList = namesList.split('\n')
+        
+        while True:
+            passname = input("Password to remove: ")
+            print(namesList)
+            if passname in namesList:
+                print("dummy")
 
-#TODO check to see if adding the to file works then make the retrieve a password bit
+                    
+#TODO delete the correct index from all of the csv files
