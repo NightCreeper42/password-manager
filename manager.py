@@ -106,3 +106,5 @@ while True:
         print("Files successfully cleaned")
     
     print()
+
+    #TODO optimize, make 'retrieving a password' a passwordLib def, make 'quit' the final option in the list
