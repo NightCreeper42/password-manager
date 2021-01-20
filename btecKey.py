@@ -8,6 +8,7 @@ class newKey:
 
     def generate(self):
         #keyLen = len(alphabet)+len(specials)
+        self.key = ''
         self.merge = list(alphabet)
         for x in specials:
             self.merge.append(x)

@@ -56,7 +56,10 @@ class newPass:
             print("3) Change the maximum chance range of each character")
             print("4) Change the minimum chance of getting a special character")
             print("5) Change the maximum chance of getting a number")
+            print("6) Quit")
             inp = int(input())-1
+            if inp == 5:
+                return
             setting = settingsList[inp]
 
             print("Current state:", self.SETTINGS[setting])
@@ -116,8 +119,20 @@ class newPass:
                 break
         return row[1]
 
-    def removeFromFile(self,filename,passname):
-        file = open(filename,"r+")
-        fileRows = []
-        print(fileRows)
+    def fileClean(self,filename):
+        file = open(filename,"r")
+        conts = file.read().split('\n')
+        indexes = []
+        for index in range(0,len(conts)):
+            if conts[index] == '':
+                indexes.append(index)
         
+        indexes = sorted(indexes,reverse=True)
+        for index in indexes:
+            conts.pop(index)
+        file.close()
+
+        rewrite = open(filename,"w")
+        for item in conts:
+            rewrite.write(item)
+        rewrite.close()
